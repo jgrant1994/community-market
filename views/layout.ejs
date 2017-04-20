@@ -34,15 +34,27 @@
                     <li><a href="/profile">My Profile</a></li>
                     <li><a href="/signup">Signup</a></li>
                     <li><a href="/logout">Logout</a></li>
+                    <li><a href="/cart" class = "glyphicon glyphicon-shopping-cart"><span class = "badge"><%= cart %></span></a></li>
                 </ul>
             </div>
         </div>
         <% } %>
 
+        <!--<% if (user) { %>
+            <div style = "left:10cm">
+                <a href = "/cart" class = "glyphicon glyphicon-shopping-cart"><span class = "badge"><%= cart %></span></a>
+            </div>
+        <% } else { %>
+            <div class = "topRight">
+                <a href = "/cart" class = "glyphicon glyphicon-shopping-cart"><span class = "badge">0</span></a>
+            </div>
+        <% } %>-->
+
         <% if(!user) {%>
         
         <div class = "topRight">
             <a href = "/login">Login / Register</a> 
+            <a href = "/cart" class = "glyphicon glyphicon-shopping-cart"><span class = "badge">0</span></a>
         </div>
         <% } %>
         

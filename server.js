@@ -58,7 +58,7 @@ app.use(function(req, res, next) {
 });
 
 
-app.use(cartLength)
+app.use(cartLength);
 
 app.use(function(req, res, next) {
 	//find all categories

@@ -29,6 +29,26 @@ stream.on('error', function(err) {
 	console.log(err);
 });
 
+router.post('/product/:product_id', function(req, res, next) {
+	//find owner of cart
+	Cart.findOne({ owner: req.user._id }, function(err, cart) {
+		//if found push all the items to cart
+		cart.items.push({
+			item: req.body.product_id,
+			price: parseFloat(req.body.priceValue),
+			quantity: parseInt(req.body.quantity)
+		});
+		
+		//parse value of req.body to float to save to database without any error
+		cart.total = (cart.total + parseFloat(req.body.priceValue)).toFixed(2);
+
+		cart.save(function(err) {
+			if(err) return next(err);
+			return res.redirect('/cart');
+		});
+	});
+});
+
 router.post('/search', function(req, res, next) {
 	res.redirect('/search?q=' +req.body.q);
 });

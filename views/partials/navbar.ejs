@@ -68,12 +68,15 @@
 			
 			</br></br></br></br>
 			
+			<% if(user) { %>
 			<form method = "post" action = "/search">
 				<div class = "form-group">
 					<input type = "text" name = "q" class = "form-control" placeholder = "Search...">
 					<button type = "submit" class = "btn btn-default"> Submit </button>
 				</div>
 			</form>
+			
+			<% } %>
 			
 		</div>
 

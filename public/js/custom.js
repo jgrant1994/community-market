@@ -42,7 +42,47 @@ $(function (){
             }
         });
     });
-
-
-
 });
+
+$(document).on('click','#plus',function(e) {
+    //prevent page from being refreshed
+    e.preventDefault();
+    //parse value of tags to do calculation
+    var priceValue = parseFloat($('#priceValue').val());
+    var quantity = parseInt($('#quantity').val());
+    
+    //increment price value and add to original hidden price of product
+    priceValue += parseFloat($('#priceHidden').val());
+    quantity += 1;
+
+    //replace current values with new values
+    $('#quantity').val(quantity);
+    //replace current values with new values and limit decimal to 2 places
+    $('#priceValue').val(priceValue.toFixed(2));
+    $('#total').html(quantity);
+});
+
+$(document).on('click','#minus',function(e) {
+    //prevent page from being refreshed
+    e.preventDefault();
+    //parse value of tags to do calculation
+    var priceValue = parseFloat($('#priceValue').val());
+    var quantity = parseInt($('#quantity').val());
+    
+    //if quantity is back to 1 change value to original hidden price and change quantity to 1
+    if(quantity==1){
+        priceValue = $('#priceHidden').val();
+        quantity= 1;
+    }else{
+        //decrement price value and add to original hidden price of product
+        priceValue -= parseFloat($('#priceHidden').val());
+        quantity -= 1;
+    }
+
+    //replace current values with new values
+    $('#quantity').val(quantity);
+    //replace current values with new values and limit decimal to 2 places
+    $('#priceValue').val(priceValue.toFixed(2));
+    $('#total').html(quantity);
+});
+

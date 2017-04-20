@@ -18,7 +18,8 @@
 
             <form method= "post">
                 <div class = "btn-group" role = "group" aria-label="...">
-                    <input type = "hidden" name = "quantity" value = "1">
+                    <input type = "hidden" name = "quantity" id = "quantity" value = "1">
+
                     <button type = "button" id = "minus" class = "btn btn-default">-</button>
                     <button type = "button" id = "total" class = "btn btn-default">1</button>
                     <button type = "button" id = "plus" class = "btn btn-default">+</button>
@@ -31,7 +32,7 @@
                     </br>
                     <input type = "text" name = "item" class = "form-control" value = "<%= product.name %>"></input>
                     </br>
-                    <input type = "text" name = "priceValue" class = "form-control" value = "<%= product.price %>"></input>
+                    <input type = "text" name = "priceValue" id = "priceValue" class = "form-control" value = "<%= product.price %>"></input>
                 </div>
 
                 <% if(user) { %>

@@ -29,6 +29,21 @@ stream.on('error', function(err) {
 	console.log(err);
 });
 
+router.get('/cart',function(req, res, next) {
+	Cart
+	// search in cart data whether cart.user.id exists 
+		.findOne({owner: req.user._id})
+	//populate items image, name, etc.
+		.populate('items.item')
+	//if cart is found render page with foundCart data
+		.exec(function(err, foundCart) {
+			if(err) next(err);
+			res.render('main/cart', {
+				cart: foundCart
+			});
+		});
+});
+
 router.post('/product/:product_id', function(req, res, next) {
 	//find owner of cart
 	Cart.findOne({ owner: req.user._id }, function(err, cart) {

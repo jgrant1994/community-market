@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<title>Community Marketplace</title>
+<head>
+<link rel = "stylesheet" href = "/css/mystyle.css">
+<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/css/bootstrap-theme.css">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="icon" href="/pictures/image1.png">
+</head>
+
+<style>
+	body{
+		background-repeat: no-repeat; /*background image will not be repeated*/
+		background-attachment: fixed;
+		background-color: lightyellow; /*background color set to lightyellow*/
+	}
+
+	.stretched{
+		position: relative;
+		width: 100%;
+	}
+
+</style>
+
+
+<body>
+		<center><img src="/pictures/image1.png" class = "img-circle"></center>
+		<center><h2>Register</h2></center>
+
+		<% if (errors.length > 0) { %>
+			<div class = "alert alert-danger alert-dismissible">
+				<button type = "button" class = "close" data-dismmiss="alert" aria-label="Close">
+					<span aria-hidden="true"&times;></span>
+				</button>
+				<%= errors %>
+			</div>
+		<% } %>
+
+		<% if (user) { %>
+    
+			<!--<div class = "topRight">
+				<%= user.profile.name %>
+			</div>-->
+
+			<div class="topRight">
+				<div class = "dropdown">
+					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><%= user.profile.name %>
+					<span class="caret"></span></button>
+					<ul class="dropdown-menu">
+						<li><a href="/signup">Signup</a></li>
+						<li><a href="/logout">Logout</a></li>
+					</ul>
+				</div>
+        </div>
+
+        <% } %>
+
+		<form method = "POST">
+
+				<div class = "form-group stretched">
+						<!-- name text field -->
+						<input type = "text" name = "name" class = "form-control" autocomplete="on" placeholder="Name">
+				</div>
+
+				<div class = "form-group">
+						<label = "school">Select Your University:</label>
+		 				<select name = "school" class = "form-control" style="width: 30%">
+								<option disabled selected value></option>
+								<option name = "school" value = "North Carolina A & T"> North Carolina A&T</option>
+								<option name = "school" value = "UNC Greensboro"> UNC Greensboro</option>
+						</select>
+				</div>
+
+				<div class = "form-group">
+						<!-- <label for = "schoolEmail">School Email:</label>  -->
+						<input type = "text" class = "form-control" name = "email" placeholder="University Email" /> 
+				</div>
+
+				<div class = "form-group">
+						<label ="password">Password:</label>
+						<input type = "password" class = "form-control" name = "password" placeholder= "at least 6 characters">
+				</div>
+
+			<p><center><input type = "submit" class = "btn btn-success"></center></p>
+		</form>
+		
+		<p><center><a href = '/login' class = "btn btn-link">Cancel</center></p>
+</body>
+	
+
+</html>

@@ -1,0 +1,48 @@
+@media screen and (min-width:500px){
+    
+}
+
+
+/* SLIDER */
+#Container_Carousel .rows .col-xs-12{
+  margin:0;
+  padding:0;
+}
+
+#Container_Carousel{
+  margin:0;
+  padding:0;
+  width:100%;
+  max-height: 850px;
+}
+
+.item img{
+  width:100%;
+  max-height: 850px;
+}
+
+.carousel,.item,.active{
+  height:100%;
+}
+
+.carousel-inner{
+  height:100%;
+}
+
+.carousel-control.left, .carousel-control.right {
+    background-image:none;
+}
+.glyphicon-circle-arrow-left {
+  position: absolute;
+  top: 50%;
+  font-size: 50px;
+  opacity: 0.5;
+  left: 50px;
+}
+.glyphicon-circle-arrow-right {
+  position: absolute;
+  top: 50%;
+  font-size: 50px;
+  opacity: 0.5;
+  right: 50px;
+}

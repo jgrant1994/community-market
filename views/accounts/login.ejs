@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <title> Community Market </title>
+
+	<head>
+        <link rel = "stylesheet" href = "/css/mystyle.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">   
+		<link rel="icon" href="/pictures/image1.png">
+	</head>
+
+	<style>
+		body{
+			background-repeat: no-repeat; /*background image will not be repeated*/
+			background-attachment: fixed;
+			background-color: lightyellow; /*background color set to lightyellow*/
+		}
+	</style>
+
+	<body>
+        
+        <form method="POST">
+            <div class = "form-container centered"> 
+                <center><h2>Community Marketplace</h2></center>
+                <center><img src = "/pictures/image1.png" class = "img-circle" alt = "example logo"></center>
+
+                <% if (message.length > 0) { %>
+			        <div class = "alert alert-danger alert-dismissible">
+				        <button type = "button" class = "close" data-dismmiss="alert" aria-label="Close">
+					    <span aria-hidden="true"&times;></span>
+				        </button>
+				        <%= message %>
+			        </div>
+		        <% } %>
+
+
+                    <!--email text field-->
+                <div class = "form-group">
+                    <label = "email">Username:</label>
+                    <input type = "text" class = "form-control" name = "email"/>
+                </div>
+
+                    <!--Password textfield-->
+                <div class = "form-group">
+                    <label for = "password">Password:</label> 
+                    <input type = "password" class = "form-control" name = "password" placeholder= "at least 6 characters">
+                </div>
+
+                    <!--Remember me checkbox-->
+                    <!--<div>
+                        <input type = "checkbox" checked = "checked"> Remember Me
+                    </div>-->
+                    
+                <div class = "form-group">
+                    <!--Login button-->
+                        <p><center><input type = "submit" class = "btn btn-success"></center></ 
+                    <!--Register button-->
+                        <p><center><a href = '/signup' class = "btn btn-link">Register</a></center></p>
+                </div>
+        </form>
+        
+        
+
+	</body>
+</html>

@@ -1,0 +1,49 @@
+
+
+<style>
+	body{
+		font-family: "Lato", sans-serif;
+	    transition: background-color .5s;
+	    background-color: lightyellow;
+	}
+
+	div{
+		font-family: courier;
+	}
+
+	.ticker{
+		transform: translateZ(0);
+	    position: fixed;
+	    left: 0px;
+	    bottom: 0; /*positions border at bottom of page*/
+	    height: 44px;
+	    line-height: 44px;
+	    width: 120%;
+	    margin-left: -10%;
+	    padding-left: 10%;
+	    padding-right: 25px;
+	    overflow: hidden;
+	    background: #000000;
+	    color: #ffffff;
+	    z-index: 900;
+	    border-top: 1px solid #C5C5C5;
+	    white-space: nowrap;
+	}
+
+</style>
+
+<!--trending ticker-->
+        <div id = "myticker" class = "ticker">
+                    <marquee behavior = "scroll" direction = "left" scrollamount = "10"><a href = "/">Welcome to the Market Floor</a></marquee>
+        </div> 
+        
+        <script>
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+                document.body.style.backgroundColor = "lightyellow";
+            }
+        </script>

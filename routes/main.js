@@ -1,6 +1,9 @@
 var router = require('express').Router(); //add middleware and http method to express module
 var User = require('../models/user');
 var Product = require('../models/product');
+var Cart = require('../models/cart')
+
+var stripe = require('stripe')('sk_test_enzQBX3nr7h8gvZABdOZ0zrr');
 
 //creating a map between product database and elastic search replica set
 Product.createMapping(function(err, mapping) {
@@ -39,7 +42,8 @@ router.get('/cart',function(req, res, next) {
 		.exec(function(err, foundCart) {
 			if(err) next(err);
 			res.render('main/cart', {
-				cart: foundCart
+				foundCart: foundCart,
+				message: req.flash('remove')
 			});
 		});
 });
@@ -60,6 +64,20 @@ router.post('/product/:product_id', function(req, res, next) {
 		cart.save(function(err) {
 			if(err) return next(err);
 			return res.redirect('/cart');
+		});
+	});
+});
+
+router.post('/remove', function(req,res,next) {
+	Cart.findOne({owner: req.user._id }, function(err, foundCart) {
+		foundCart.items.pull(String(req.body.item));
+
+		//subtract total price of cart and products price
+		foundCart.total = (foundCart.total - parseFloat(req.body.price)).toFixed(2);
+		foundCart.save(function(err, found) {
+			if (err) return next(err);
+			req.flash('remove','Successfully removed item');
+			res.redirect('/cart');
 		});
 	});
 });
@@ -141,6 +159,22 @@ router.get('/product/:id', function(req, res, next) {
 		});
 	});
 });
+
+
+router.post('/payment', function(req, res, next) {
+
+	var stripeToken = req.body.stripeToken;
+	var currentCharges = Math.round(req.body.stripeMoney * 100) ;
+	stripe.customers.create({
+		source: stripeToken,
+	}).then(function(customer) {
+		return stripe.charges.create({
+			amount: currentCharges,
+			currency:'usd',
+			customer: customer._id
+		})
+	})
+})
 
 //export home and products route for server.js use
 module.exports = router;

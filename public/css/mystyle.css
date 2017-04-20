@@ -22,3 +22,7 @@ div{
     right: 45px;
     font-size: 14px;
 }
+
+.product-image {
+    width: 100%;
+}

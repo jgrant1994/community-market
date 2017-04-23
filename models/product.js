@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 var mongoosastic = require('mongoosastic');
+var Schema = mongoose.Schema;
 
 
 var ProductSchema = new Schema({

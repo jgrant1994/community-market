@@ -16,6 +16,7 @@ router.post('/search', function(req, res, next) {
 });
 
 router.get('/:name', function(req, res, next) {
+
     async.waterfall([
         function(callback) {
             Category.findOne({name: req.params.name}, function(err, category) {

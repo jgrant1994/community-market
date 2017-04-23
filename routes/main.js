@@ -3,7 +3,10 @@ var User = require('../models/user');
 var Product = require('../models/product');
 var Cart = require('../models/cart')
 
-var stripe = require('stripe')('sk_test_enzQBX3nr7h8gvZABdOZ0zrr');
+var async = require('async');
+
+
+var stripe = require('stripe') ('sk_test_enzQBX3nr7h8gvZABdOZ0zrr');
 
 //creating a map between product database and elastic search replica set
 Product.createMapping(function(err, mapping) {
@@ -83,7 +86,7 @@ router.post('/remove', function(req,res,next) {
 });
 
 router.post('/search', function(req, res, next) {
-	res.redirect('/search?q=' +req.body.q);
+	res.redirect('/search?q=' + req.body.q);
 });
 
 router.get('/search', function(req, res, next) {
@@ -91,6 +94,7 @@ router.get('/search', function(req, res, next) {
 		Product.search({
 			query_string: { query: req.query.q}
 		}, function(err, results) {
+			results:
 			if(err) return next(err);
 			var data = results.hits.hits.map(function(hit) {
 				return hit;
@@ -129,9 +133,9 @@ router.get('/', function(req, res) {
 	}
 });
 
-router.get('/buy-main', function(req, res) {
-	res.render('market/buy');
-});
+// router.get('/buy-main', function(req, res) {
+// 	res.render('market/buy');
+// });
 
 router.get('/sell-main', function(req, res) {
 	res.render('market/sell');
@@ -163,18 +167,51 @@ router.get('/product/:id', function(req, res, next) {
 
 router.post('/payment', function(req, res, next) {
 
-	var stripeToken = req.body.stripeToken;
-	var currentCharges = Math.round(req.body.stripeMoney * 100) ;
-	stripe.customers.create({
-		source: stripeToken,
-	}).then(function(customer) {
-		return stripe.charges.create({
-			amount: currentCharges,
-			currency:'usd',
-			customer: customer._id
-		})
-	})
-})
+  var stripeToken = req.body.stripeToken;
+  var currentCharges = Math.round(req.body.stripeMoney * 100);
+  stripe.customers.create({
+    source: stripeToken,
+  }).then(function(customer) {
+    return stripe.charges.create({
+      amount: currentCharges,
+      currency: 'usd',
+      customer: customer.id
+    });
+  }).then(function(charge) {
+    async.waterfall([
+      function(callback) {
+        Cart.findOne({ owner: req.user._id }, function(err, cart) {
+          callback(err, cart);
+        });
+      },
+      function(cart, callback) {
+        User.findOne({ _id: req.user._id }, function(err, user) {
+          if (user) {
+            for (var i = 0; i < cart.items.length; i++) {
+              user.history.push({
+                item: cart.items[i].item,
+                paid: cart.items[i].price
+              });
+            }
 
+            user.save(function(err, user) {
+              if (err) return next(err);
+              callback(err, user);
+            });
+          }
+        });
+      },
+      function(user) {
+        Cart.update({ owner: user._id }, { $set: { items: [], total: 0 }}, function(err, updated) {
+          if (updated) {
+            res.redirect('/profile');
+          }
+        });
+      }
+    ]);
+  });
+
+
+});
 //export home and products route for server.js use
 module.exports = router;
